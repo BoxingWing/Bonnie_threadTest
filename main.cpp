@@ -11,6 +11,24 @@ int numG=0;
 int num1=0;
 int num2=0;
 
+class TestPeriodicTask : public PeriodicTask {
+ public:
+  using PeriodicTask::PeriodicTask;
+  int _counter = 0;
+  bool _cleanedUp = false;
+  bool _init = false;
+  bool _slow = false;
+
+  void run() override {
+    _counter++;
+    if (_slow) usleep(15000);
+  }
+
+  void init() override { _init = true; }
+
+  void cleanup() override { _cleanedUp = true; }
+};
+
 void function1()
 {
     num1++;
@@ -31,9 +49,12 @@ int main() {
             &taskManager, .001, "task1", function1,0);
     PeriodicFunction Task2(
             &taskManager, .001, "task2", function2,1);
+    TestPeriodicTask Task3(&taskManager, .001, "task2", 1);
+
     mainLoopTimer.start();
     Task1.start();
     Task2.start();
+    Task3.start();
 
     for (int i=0;i<100;i++) {
 

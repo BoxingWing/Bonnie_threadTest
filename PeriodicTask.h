@@ -24,7 +24,7 @@ class PeriodicTask {
  public:
   PeriodicTask(PeriodicTaskManager* taskManager, float period,
                std::string name);
-    PeriodicTask(PeriodicTaskManager* taskManager, float period,
+  PeriodicTask(PeriodicTaskManager* taskManager, float period,
                  std::string name, int cpuIdxin);
   void start();
   void stop();
